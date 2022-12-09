@@ -1,0 +1,53 @@
+﻿@model ArticleListingModel
+
+@{
+
+	ViewBag.Title = "Articles";
+}
+
+
+<partial name="_SearchBarPartial" class="mb-2" model="@Model.Articles" />
+
+<partial name="_AllArticlesPartial" model="@Model.Articles"/>
+
+@{
+	var previousPage = Model.CurrentPage - 1; 
+
+	if (previousPage < 1)
+	{
+		previousPage = 1;
+	}
+
+	var maxPage = Math.Ceiling((double)Model.Articles.Count / ArticleQueryModel.ArticlesPerPage);
+}
+
+<div class="container d-flex">
+	<div class="row mb-5">
+		<div class="col-md-6">
+			<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+			   asp-controller="Articles"
+			   asp-action="Index"
+			   asp-route-currentPage="@previousPage">
+				Previous <i class="fa fa-arrow-left" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>
+
+	@{
+		var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+		!Model.Articles.Any();
+	}
+
+	<div class="row mb-5">
+		<div class="col-md-6">
+			<a class="btn btn-primary @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+			   asp-controller="Articles"
+			   asp-action="Index"
+			   asp-route-currentPage="@Model.CurrentPage + 1">
+				Next <i class="fa fa-arrow-right" aria-hidden="true"></i>
+
+			</a>
+		</div>
+	</div>
+</div>
+

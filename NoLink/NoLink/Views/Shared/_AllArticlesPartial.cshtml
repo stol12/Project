@@ -1,0 +1,90 @@
+﻿@model List<ArticleQueryModel>
+
+@{
+
+	//TODO put into a partial view to avoid repetition MANDATORY !!!!!! SHIT LOOKS BAD
+
+	var articlesCount = Model.Count();
+
+	if (articlesCount > 0 && SignInManager.IsSignedIn(User))
+	{
+		<h2 class="text-center text-white mb-2">@articlesCount Articles</h2>
+		<div class="container mt-3">
+			<div class="row justify-content-md-center">
+
+				@for (int i = 0; i < articlesCount; i++)
+				{
+					var article = Model[i];
+					var articleImage = article.Files
+					.Where(f => f.ArticleId == article.Id)
+					.FirstOrDefault();
+
+					var srcString = $"data:image/jpg;base64,{articleImage.FileContent}";
+					var dateAdded = $"{article.DateAdded.Year.ToString()}/{article.DateAdded.Month.ToString()}/{article.DateAdded.Day.ToString()}";
+
+					<div class="col-6 mb-5">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title text-center mb-3">@article.Title</h5>
+								<img class="article-image mt-2" src="@srcString">
+								<div class="container mt-3">
+									<a asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id" class="btn btn-primary">Read article</a>
+									<a class="btn btn-danger" asp-controller="Articles" asp-action="DeleteArticle" asp-route-id="@article.Id">Delete</a>
+								</div>
+								<span>Author: @article.Author.UserName</span>
+								<span>Date Added: @dateAdded</span>
+							</div>
+						</div>
+					</div>
+
+				}
+			</div>
+			<div class="text-white text-center">
+				<a asp-controller="Articles" asp-action="AddArticle" class="btn btn-success">ADD ARTICLE</a>
+			</div>
+		</div>
+	}
+	else
+	{
+		if (articlesCount <= 0 && SignInManager.IsSignedIn(User))
+		{
+			<h2 class="text-center text-white">There are currently no articles available</h2>
+			<a asp-controller="Articles" asp-Action="AddArticle" class="btn btn-success text-white text-center">ADD ARTICLE</a>
+		}
+		else
+		{
+			<div class="container mt-3">
+
+				<h2 class="text-center text-white">@Model.Count() articles available</h2>
+
+				@for (int i = 0; i < Model.Count(); i++)
+				{
+					var article = Model[i];
+					var articleImage = article.Files
+					.Where(f => f.ArticleId == article.Id)
+					.FirstOrDefault();
+
+					var dateAdded = $"{article.DateAdded.Year.ToString()}/{article.DateAdded.Month.ToString()}/{article.DateAdded.Day.ToString()}";
+
+					if (articleImage != null)
+					{
+						var srcString = $"data:image/jpg;base64,{articleImage.FileContent}";
+						<div class="col-6 mb-5">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title text-center mb-3">@article.Title</h5>
+									<img class="article-image mt-2" src="@srcString">
+									<div class="container mt-3">
+										<a asp-controller="Articles" asp-action="Details" asp-route-id="@article.Id" class="btn btn-primary">Read article</a>
+									</div>
+									<p>Author: @article.Author.UserName</p>
+									<span>Date Added: @dateAdded</span>
+								</div>
+							</div>
+						</div>
+					}
+				}
+			</div>
+		}
+	}
+}

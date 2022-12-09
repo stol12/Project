@@ -1,0 +1,45 @@
+﻿@model List<FirmServiceQueryModel>
+@{
+	ViewData["Title"] = "Services";
+}
+
+<!--TODO introduce a partial views in order to make code better and readable-->
+
+<div>
+    <div class="container mb-3" id="thumbnail">
+        <img src="https://mytechdecisions.com/wp-content/uploads/2019/05/AdobeStock_186885581.jpeg" class="w-100" title="services-image" alt="second" style="opacity: 0.8" />
+        <div class="caption">
+            <h1 class="text-light" style="font-family: 'Kanit', sans-serif;">
+                Maneged Security
+            </h1>
+        </div>
+        <div class="caption text-center">
+            <p class="text-light mt-5" style="font-family: 'M PLUS Rounded 1c', sans-serif;">Cybersecurity Device Management Team support you, to prevent, detect and respond to cyber-attacks, <br /> with continuous compliance and risk minimization..</p>
+        </div>
+        <div class="caption">
+            <button id="quote-button" class="btn btn-primary mt-5">Get a Quote</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var firmService = Model[i];
+
+                <div class="col-6 mb-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@firmService.Name</h5>
+                            <p class="card-text">@firmService.Description</p>
+                            <a href="#" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+

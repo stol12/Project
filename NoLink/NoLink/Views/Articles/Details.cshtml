@@ -1,0 +1,16 @@
+﻿@model ArticleQueryModel
+
+
+@{
+	var imgSrcString = $"data:image/jpg;base64,{Model.FileContent}";
+}
+
+<div class="article-container container">
+	<article class="article-element">
+		<img src="@imgSrcString" class="mt-3"/>
+		<h2 class="mb-2 mt-3">@Model.Title</h2>
+		<div class="paragraph-element container mt-3 mb-3">
+			<p class="text-secondary fw-bold">@Model.Text</p>
+		</div>
+	</article>
+</div>

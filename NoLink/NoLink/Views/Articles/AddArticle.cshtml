@@ -1,0 +1,30 @@
+﻿@model AddArticleFormModel
+@{
+	ViewBag.Title = "Add Article";
+}
+
+<div class="container">
+	
+<h2 class="text-white text-center">Add your article</h2>
+
+<form asp-controller="Articles" asp-action="AddArticle" class="article-form" method="post">
+  <div class="form-group">
+    <label class="text-white">Title</label>
+    <input asp-for="Title" type="text" class="form-control" placeholder="Enter Title">
+    <span asp-validation-for="Title"></span>
+  </div class="form-group" style="cursor: pointer;">
+        <div class="custom-file mt-3 mb-3 text-white">
+            <input asp-for="FileContent" type="file" class="custom-file-input" id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile"></label>
+            <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+  <div class="form-group">
+    <label class="text-white">Article Content</label>
+    <textarea asp-for="Text" class="form-control"rows="8"></textarea>
+    <span asp-validation-for="Text"></span>
+  </div>
+  <div class="container mt-3 text-center">
+      <button class="btn btn-primary" type="submit">CREATE</button>
+  </div>
+</form>
+</div>

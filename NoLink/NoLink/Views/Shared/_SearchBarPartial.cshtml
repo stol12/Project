@@ -1,0 +1,10 @@
+﻿@model List<ArticleQueryModel>
+
+<div class="container">
+    <form asp-controller="Articles" asp-action="Index" method="post">
+        <p class="text-white">
+            <i class="search-icon fa fa-search" aria-hidden="true"></i><input type="text" name="SearchString" placeholder="Search..." />
+            <input btn class="btn-outline-dark fw-bolder" type="submit" value="SEARCH!" />
+        </p>
+    </form>
+</div>

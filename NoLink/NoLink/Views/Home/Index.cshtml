@@ -1,0 +1,69 @@
+﻿@model List<TopServiceModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container-fluid h-75">
+
+    <div class="mb-5"></div>
+
+    <div id="carouselExampleControls" class="carousel-container carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                const int length = 20;
+                var service = Model[i];
+                var fileInfo = new FileInfo(service.Name);
+                var extension = fileInfo.Extension;
+
+                var srcString = $"data:image/{extension};base64,{service.FileContent}";
+
+                if (srcString.Length < length) continue;
+             
+                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+
+                    <img class="carousel-image d-block w-100 img-fluid h-auto" src="@srcString" alt="" style="filter: brightness(45%);">
+                    <div class="carousel-caption d-none d-md-block">
+                        <p style="font-family: 'Bebas Neue', cursive; font-size:60px">Easiest, cheapest, most secure and least time consuming <br> way to deal with <span style="color: red">malware.</span></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+  
+    <div class="jumbotron text-white">
+        <div class="text-center">
+            <h1 class="display-4" style="font-family: 'Russo One', sans-serif;">No-Link, the cyber security your business <span class="typed-text" style="color: cyan"></span><span class="cursor" style="color:cyan">&nbsp;</span></h1>
+        </div>
+        <p class="lead text-center" style="font-family: 'Exo 2', sans-serif;">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p class="text-center" style="font-family: 'Didact Gothic', sans-serif;">It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead text-center">
+            <a asp-controller="About" asp-action="Index" class="btn btn-primary btn-lg" role="button">LEARN MORE</a>
+        </p>
+    </div>
+    <hr />
+    <div class="container text-center mb-3 mt-3 text-white">
+        <h2>What we offer</h2>
+    </div>
+
+    <div class="row" style="margin: auto">
+        
+        @for(int i = 0; i < Model.Count; i ++)
+        {
+            var service = Model[i];
+
+            <div class="card-container col-sm-6 d-flex mb-5 mt-3 rounded">
+                <div class="card-el">
+                    <div class="card-item card-body mt-auto">
+                        <h5 class="card-title" style="color:#ffffff;font-family: 'Anton', sans-serif;">@service.Name</h5>
+                        <p class="card-text text-secondary fw-bolder">@service.Description.Substring(0, service.Description.Length / 4)</p>
+                        <a asp-controller="Service" asp-action="Details" asp-route-id="@service.Id" class="btn btn-primary" style="position:absolute; bottom: 10px;">DETAILS</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

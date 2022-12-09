@@ -1,0 +1,22 @@
+﻿@model UserLoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+<form asp-controller="Account" asp-action="Login" method="post" class="login-form">
+    <h1>Login</h1>
+    <div class="form-group mt-2 mb-2">
+        <label>Username</label>
+        <input asp-for="UserName" class="form-control" placeholder="Enter username">
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2 mb-2">
+        <label>Password</label>
+        <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-secondary" type="submit">LOGIN</button> 
+        <p>Forgot password or username? <a>Click here</a></p>
+    </div>
+</form>
